@@ -387,6 +387,12 @@ function renderGasRows() {
         <label class="gas-label">품목</label>
         <select onchange="updateRow(${i},'gasId',this.value)">${gasOptions(o.gasId)}</select>
       </div>
+      <div class="gas-card-row">
+        <div class="gas-field grow1">
+          <label class="gas-label">사이즈</label>
+          <input placeholder="예: 47L, 10L" value="${o.size||''}" oninput="updateRow(${i},'size',this.value)">
+        </div>
+      </div>
       <div class="gas-card-bottom">
         <div class="gas-field grow1">
           <label class="gas-label">수량${unitLabel}</label>
