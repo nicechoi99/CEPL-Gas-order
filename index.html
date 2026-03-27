@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#1A3A5C">
+<title>이웅 박사님 팀 - 신양산소주문</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #ECEEF4; --card: #FFFFFF; --primary: #1A3A5C; --primary-light: #2B5F8E;
+    --accent: #E8A838; --accent-light: #FFF3DC; --text: #1B2A3D; --text-sub: #6B7D93;
+    --border: #DEE3EB; --danger: #DC3545; --white: #FFFFFF;
+  }
+  body {
+    font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg); color: var(--text); min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 560px; margin: 0 auto; padding: 16px 12px 40px; display: flex; flex-direction: column; gap: 14px; }
+
+  /* Header */
+  .header {
+    background: linear-gradient(145deg, var(--primary) 0%, var(--primary-light) 100%);
+    border-radius: 16px; padding: 20px 22px 16px; color: var(--white);
+    box-shadow: 0 6px 24px rgba(26,58,92,0.25);
+  }
+  .logo-area { display: flex; align-items: center; gap: 14px; }
+  .logo-icon {
+    width: 44px; height: 44px; border-radius: 11px; background: rgba(255,255,255,0.15);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .header h1 { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
+  .header .sub { font-size: 13px; opacity: 0.8; font-weight: 600; margin-top: 2px; letter-spacing: 0.5px; }
+
+  /* Tabs */
+  .tab-bar { display: flex; background: var(--card); border-radius: 12px; padding: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+  .tab-btn {
+    flex: 1; padding: 11px 0; border: none; border-radius: 9px; font-size: 13.5px;
+    font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.2s;
+    background: transparent; color: var(--text-sub);
+  }
+  .tab-btn.active { background: var(--primary); color: var(--white); font-weight: 700; }
+
+  /* Sections */
+  .section { background: var(--card); border-radius: 14px; padding: 18px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+  .section-header { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+  .section-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--primary-light); flex-shrink: 0; }
+  .section-dot.accent { background: var(--accent); }
+  .section-label { font-size: 13px; font-weight: 700; color: var(--primary); letter-spacing: 0.3px; }
+
+  /* Form */
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .field { display: flex; flex-direction: column; gap: 4px; }
+  .field label { font-size: 11px; font-weight: 600; color: var(--text-sub); }
+  input, select {
+    border: 1.5px solid var(--border); border-radius: 8px; padding: 9px 11px;
+    font-size: 13.5px; font-family: inherit; color: var(--text); outline: none;
+    background: #F7F8FA; width: 100%; transition: border-color 0.2s;
+  }
+  input:focus, select:focus { border-color: var(--primary-light); }
+
+  /* Gas Cards */
+  .gas-cards { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+  .gas-card {
+    background: #F7F8FA; border: 1.5px solid var(--border); border-radius: 12px;
+    padding: 14px; display: flex; flex-direction: column; gap: 10px;
+  }
+  .gas-card-top { display: flex; justify-content: space-between; align-items: center; }
+  .gas-card-num { font-size: 11px; font-weight: 700; color: var(--primary-light); background: #E8EDF3; border-radius: 6px; padding: 2px 8px; }
+  .gas-card-bottom { display: flex; gap: 10px; align-items: flex-end; }
+  .gas-field { display: flex; flex-direction: column; gap: 4px; }
+  .gas-field.grow1 { flex: 1; }
+  .gas-field.grow15 { flex: 1.5; }
+  .gas-label { font-size: 11px; font-weight: 600; color: var(--text-sub); }
+
+  /* Qty Control */
+  .qty-control { display: flex; align-items: center; border: 1.5px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--white); }
+  .qty-btn {
+    width: 36px; height: 38px; border: none; background: transparent; font-size: 17px;
+    font-weight: 700; color: var(--primary-light); cursor: pointer; font-family: inherit;
+  }
+  .qty-btn:active { background: #E8EDF3; }
+  .qty-input {
+    width: 48px; height: 38px; border: none; border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border); text-align: center; font-size: 14px;
+    font-weight: 600; border-radius: 0; padding: 0; background: transparent;
+  }
+
+  /* Buttons */
+  .add-btn {
+    background: var(--accent-light); color: #A06D10; border: 1.5px solid #F0D89A;
+    border-radius: 8px; padding: 7px 14px; font-size: 12.5px; font-weight: 700;
+    cursor: pointer; font-family: inherit;
+  }
+  .remove-btn {
+    width: 28px; height: 28px; border: none; border-radius: 7px; background: #FEE2E2;
+    color: var(--danger); font-size: 13px; font-weight: 700; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .section-top { display: flex; justify-content: space-between; align-items: center; }
+
+  .summary-bar {
+    background: var(--accent-light); border-radius: 10px; padding: 12px 16px;
+    border: 1.5px solid #F0D89A; font-size: 13px; color: #7A5B1A;
+  }
+
+  .btn-row { display: flex; gap: 10px; }
+  .save-btn {
+    flex: 1; padding: 14px; border-radius: 12px; border: 2px solid var(--primary);
+    background: transparent; color: var(--primary); font-size: 14px; font-weight: 700;
+    cursor: pointer; font-family: inherit; transition: all 0.2s;
+  }
+  .save-btn:active { background: var(--primary); color: var(--white); }
+  .preview-btn {
+    flex: 2; padding: 14px; border-radius: 12px; border: none;
+    background: linear-gradient(145deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: var(--white); font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit;
+    box-shadow: 0 4px 16px rgba(26,58,92,0.25);
+  }
+  .btn-disabled { opacity: 0.4; pointer-events: none; }
+
+  /* Month Filter */
+  .month-filter { display: flex; gap: 6px; flex-wrap: wrap; }
+  .month-chip {
+    padding: 8px 14px; border-radius: 20px; border: 1.5px solid var(--border);
+    background: var(--card); color: var(--text-sub); font-size: 12.5px; font-weight: 600;
+    cursor: pointer; font-family: inherit; white-space: nowrap; transition: all 0.2s;
+  }
+  .month-chip.active { border-color: var(--primary); background: var(--primary); color: var(--white); font-weight: 700; }
+
+  /* Stats */
+  .stats-card { background: var(--card); border-radius: 14px; padding: 18px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+  .stats-title { font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 12px; }
+  .stats-grid { display: flex; gap: 12px; }
+  .stat-item { flex: 1; text-align: center; background: #F4F6FA; border-radius: 10px; padding: 12px 8px; }
+  .stat-num { font-size: 22px; font-weight: 800; color: var(--primary); }
+  .stat-label { font-size: 11px; color: var(--text-sub); margin-top: 2px; font-weight: 600; }
+  .stats-orderers { margin-top: 12px; font-size: 12.5px; color: var(--text-sub); background: #F7F8FA; border-radius: 8px; padding: 8px 12px; }
+
+  /* History */
+  .empty-state { text-align: center; padding: 48px 0; background: var(--card); border-radius: 14px; }
+  .empty-icon { font-size: 36px; margin-bottom: 8px; }
+  .empty-title { font-size: 14px; font-weight: 600; color: var(--text-sub); }
+  .empty-desc { font-size: 12px; color: #A0AABB; margin-top: 4px; }
+
+  .history-list { display: flex; flex-direction: column; gap: 10px; }
+  .history-card { background: var(--card); border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden; }
+  .history-header { display: flex; align-items: center; padding: 14px 16px; cursor: pointer; gap: 12px; }
+  .history-header:active { background: #F7F8FA; }
+  .history-info { flex: 1; }
+  .history-date { font-size: 14px; font-weight: 700; color: var(--primary); }
+  .history-meta { display: flex; gap: 8px; margin-top: 3px; }
+  .history-orderer { font-size: 12px; font-weight: 600; color: var(--text); }
+  .history-lab { font-size: 12px; color: var(--text-sub); }
+  .history-badge { font-size: 11px; font-weight: 700; color: var(--primary-light); background: #E8EDF3; border-radius: 6px; padding: 3px 8px; white-space: nowrap; }
+  .history-arrow { font-size: 12px; color: var(--text-sub); transition: transform 0.2s; }
+  .history-arrow.open { transform: rotate(180deg); }
+
+  .history-detail { border-top: 1px solid var(--border); padding: 12px 16px; animation: slideDown 0.2s ease; }
+  @keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+  .detail-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .detail-table th { text-align: left; padding: 6px 8px; font-size: 11px; font-weight: 700; color: var(--text-sub); border-bottom: 1.5px solid var(--border); }
+  .detail-table th.center { text-align: center; }
+  .detail-table td { padding: 8px; border-bottom: 1px solid #F0F2F5; font-size: 13px; }
+  .detail-table td.center { text-align: center; font-weight: 700; }
+  .detail-table td.sub { color: var(--text-sub); }
+
+  .history-actions { display: flex; gap: 8px; margin-top: 10px; justify-content: flex-end; }
+  .hist-copy-btn {
+    padding: 7px 14px; border-radius: 8px; border: 1.5px solid var(--border);
+    background: var(--card); font-size: 12px; font-weight: 600; cursor: pointer;
+    font-family: inherit; color: var(--text);
+  }
+  .hist-del-btn {
+    padding: 7px 14px; border-radius: 8px; border: none; background: #FEE2E2;
+    font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit; color: var(--danger);
+  }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(27,42,61,0.55); backdrop-filter: blur(4px);
+    display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 16px;
+    animation: fadeIn 0.2s ease;
+  }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .modal-content {
+    background: var(--card); border-radius: 18px; padding: 22px; max-width: 460px; width: 100%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25); animation: scaleIn 0.2s ease;
+  }
+  @keyframes scaleIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .modal-title { font-size: 15px; font-weight: 700; color: var(--primary); }
+  .close-btn { background: none; border: none; font-size: 18px; color: var(--text-sub); cursor: pointer; padding: 4px; }
+  .message-box {
+    background: #F4F5F7; border-radius: 12px; padding: 16px; font-size: 13.5px; line-height: 1.75;
+    white-space: pre-wrap; font-family: 'Noto Sans KR', sans-serif; color: var(--text);
+    border: 1px solid var(--border); max-height: 280px; overflow: auto;
+  }
+  .modal-actions { display: flex; gap: 10px; margin-top: 14px; }
+  .modal-copy-btn {
+    flex: 1; padding: 13px; border-radius: 11px; border: 2px solid var(--primary);
+    background: transparent; color: var(--primary); font-size: 13.5px; font-weight: 700;
+    cursor: pointer; font-family: inherit;
+  }
+  .modal-send-btn {
+    flex: 1; padding: 13px; border-radius: 11px; border: none;
+    background: linear-gradient(145deg, var(--primary-light) 0%, #3A7CB8 100%);
+    color: var(--white); font-size: 13.5px; font-weight: 700; cursor: pointer; font-family: inherit;
+  }
+  .modal-hint { font-size: 11px; color: var(--text-sub); text-align: center; margin-top: 12px; line-height: 1.6; }
+
+  /* Toast */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    background: var(--primary); color: var(--white); padding: 12px 24px; border-radius: 12px;
+    font-size: 13px; font-weight: 600; box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    z-index: 2000; animation: toastIn 0.3s ease;
+  }
+  @keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+
+  .hidden { display: none !important; }
+
+  @media (max-width: 400px) {
+    .info-grid { grid-template-columns: 1fr; }
+    .stats-grid { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Header -->
+  <div class="header">
+    <div class="logo-area">
+      <div class="logo-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 20V8a6 6 0 1 1 12 0v12"/><path d="M6 14h12"/><path d="M6 10h12"/>
+        </svg>
+      </div>
+      <div>
+        <h1>이웅 박사님 팀</h1>
+        <div class="sub">신양산소주문</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tab-bar">
+    <button class="tab-btn active" id="tabOrder" onclick="switchTab('order')">주문서 작성</button>
+    <button class="tab-btn" id="tabHistory" onclick="switchTab('history')">주문 내역 (<span id="historyCount">0</span>)</button>
+  </div>
+
+  <!-- ═══ ORDER TAB ═══ -->
+  <div id="orderPanel">
+    <div class="section">
+      <div class="section-header"><div class="section-dot"></div><span class="section-label">주문 정보</span></div>
+      <div class="info-grid">
+        <div class="field"><label>주문자 *</label><input id="orderer" placeholder="이름"></div>
+        <div class="field"><label>연구실 / 부서 *</label><input id="lab" placeholder="예: 화학공학과 301호"></div>
+        <div class="field"><label>주문 날짜</label><input id="orderDate" type="date"></div>
+        <div class="field"><label>수신 전화번호</label><input id="phone" placeholder="010-0000-0000" value="010-"></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-top">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div class="section-dot accent"></div><span class="section-label">품목 선택</span>
+        </div>
+        <button class="add-btn" onclick="addRow()">+ 품목 추가</button>
+      </div>
+      <div class="gas-cards" id="gasRows"></div>
+    </div>
+
+    <div class="summary-bar hidden" id="summaryBar"></div>
+
+    <div class="btn-row">
+      <button class="save-btn btn-disabled" id="saveBtn" onclick="saveOrder()">내역 저장</button>
+      <button class="preview-btn btn-disabled" id="previewBtn" onclick="showPreview()">문자 미리보기</button>
+    </div>
+  </div>
+
+  <!-- ═══ HISTORY TAB ═══ -->
+  <div id="historyPanel" class="hidden"></div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay hidden" id="modal" onclick="closeModal()">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <span class="modal-title">문자 내용 미리보기</span>
+      <button class="close-btn" onclick="closeModal()">✕</button>
+    </div>
+    <div class="message-box" id="messageBox"></div>
+    <div class="modal-actions">
+      <button class="modal-copy-btn" id="modalCopyBtn" onclick="copyMessage()">클립보드 복사</button>
+      <button class="modal-send-btn" onclick="sendSMS()">문자 앱으로 보내기</button>
+    </div>
+    <div class="modal-hint">
+      * "문자 앱으로 보내기"를 누르면 기기의 문자 앱이 열립니다.<br>
+      * 카카오톡 등으로 보내려면 "클립보드 복사" 후 붙여넣기 하세요.
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast hidden" id="toast"></div>
+
+<script>
+const GAS_LIST = [
+  { id:"1", name:"수소 99.9%", unit:"본" },
+  { id:"2", name:"질소 99.9%", unit:"본" },
+  { id:"3", name:"고압곤 99.999%", unit:"본" },
+  { id:"4", name:"고압조정기", unit:"개" },
+  { id:"5", name:"케이지연결", unit:"개" },
+  { id:"6", name:"홀더 10L", unit:"개" },
+  { id:"7", name:"질소 99.999%", unit:"본" },
+  { id:"8", name:"배프레저조정기", unit:"개" },
+  { id:"9", name:"수소 99.9999%", unit:"본" },
+  { id:"10", name:"액체질소", unit:"L" },
+  { id:"11", name:"탄산 93.5%", unit:"본" },
+  { id:"12", name:"홀더", unit:"개" },
+  { id:"13", name:"서포트 3구", unit:"개" },
+  { id:"14", name:"H2 0.1 15%/Ar 10L", unit:"본" },
+  { id:"15", name:"아르곤 99.999%", unit:"본" },
+  { id:"16", name:"공기", unit:"본" },
+  { id:"17", name:"고순도탄산", unit:"본" },
+  { id:"18", name:"싸이곤 탄산", unit:"본" },
+  { id:"19", name:"테프론호스(너트,패럴장착) 1/4", unit:"개" },
+  { id:"20", name:"CO2 0.3% Ar", unit:"본" },
+  { id:"21", name:"테프론호스(너트,패럴장착) 3/8", unit:"개" },
+  { id:"22", name:"테프론호스(너트,패럴장착) 1/2", unit:"개" },
+  { id:"23", name:"테프론호스(너트,패럴장착) 1/8", unit:"개" },
+];
+
+let orders = [{ gasId:"", qty:1, note:"" }];
+let history = [];
+let currentTab = "order";
+let selectedMonth = "";
+let expandedId = null;
+
+// Init
+document.getElementById("orderDate").value = new Date().toISOString().split("T")[0];
+loadHistory();
+renderGasRows();
+
+function loadHistory() {
+  try { history = JSON.parse(localStorage.getItem("gas-order-history") || "[]"); } catch(e) { history = []; }
+  document.getElementById("historyCount").textContent = history.length;
+}
+function saveHistoryData() {
+  localStorage.setItem("gas-order-history", JSON.stringify(history));
+  document.getElementById("historyCount").textContent = history.length;
+}
+
+function switchTab(tab) {
+  currentTab = tab;
+  document.getElementById("tabOrder").classList.toggle("active", tab === "order");
+  document.getElementById("tabHistory").classList.toggle("active", tab === "history");
+  document.getElementById("orderPanel").classList.toggle("hidden", tab !== "order");
+  document.getElementById("historyPanel").classList.toggle("hidden", tab !== "history");
+  if (tab === "history") renderHistory();
+}
+
+function gasOptions(selectedId) {
+  return '<option value="">— 품목 선택 —</option>' +
+    GAS_LIST.map(g => `<option value="${g.id}" ${g.id === selectedId ? "selected" : ""}>${g.name}</option>`).join("");
+}
+
+function renderGasRows() {
+  const el = document.getElementById("gasRows");
+  el.innerHTML = orders.map((o, i) => {
+    const gas = GAS_LIST.find(g => g.id === o.gasId);
+    const unitLabel = gas ? ` (${gas.unit})` : "";
+    return `
+    <div class="gas-card">
+      <div class="gas-card-top">
+        <span class="gas-card-num">#${i+1}</span>
+        ${orders.length > 1 ? `<button class="remove-btn" onclick="removeRow(${i})">✕</button>` : ""}
+      </div>
+      <div class="gas-field">
+        <label class="gas-label">품목</label>
+        <select onchange="updateRow(${i},'gasId',this.value)">${gasOptions(o.gasId)}</select>
+      </div>
+      <div class="gas-card-bottom">
+        <div class="gas-field grow1">
+          <label class="gas-label">수량${unitLabel}</label>
+          <div class="qty-control">
+            <button class="qty-btn" onclick="changeQty(${i},-1)">−</button>
+            <input class="qty-input" type="number" min="1" value="${o.qty}" onchange="updateRow(${i},'qty',parseInt(this.value)||1)">
+            <button class="qty-btn" onclick="changeQty(${i},1)">+</button>
+          </div>
+        </div>
+        <div class="gas-field grow15">
+          <label class="gas-label">비고</label>
+          <input placeholder="선택사항" value="${o.note}" oninput="updateRow(${i},'note',this.value)">
+        </div>
+      </div>
+    </div>`;
+  }).join("");
+  updateSummary();
+}
+
+function addRow() { orders.push({ gasId:"", qty:1, note:"" }); renderGasRows(); }
+function removeRow(i) { orders.splice(i, 1); renderGasRows(); }
+function updateRow(i, field, value) { orders[i][field] = value; if (field === "gasId") renderGasRows(); else updateSummary(); }
+function changeQty(i, delta) { orders[i].qty = Math.max(1, orders[i].qty + delta); renderGasRows(); }
+
+function getValid() { return orders.filter(o => o.gasId && o.qty > 0); }
+
+function updateSummary() {
+  const valid = getValid();
+  const bar = document.getElementById("summaryBar");
+  const orderer = document.getElementById("orderer").value.trim();
+  const lab = document.getElementById("lab").value.trim();
+  const isValid = orderer && lab && valid.length > 0;
+
+  if (valid.length > 0) {
+    const totalQty = valid.reduce((s, o) => s + o.qty, 0);
+    bar.innerHTML = `총 <strong>${valid.length}</strong>개 품목 · <strong>${totalQty}</strong>개 항목`;
+    bar.classList.remove("hidden");
+  } else {
+    bar.classList.add("hidden");
+  }
+
+  document.getElementById("saveBtn").classList.toggle("btn-disabled", !isValid);
+  document.getElementById("previewBtn").classList.toggle("btn-disabled", !isValid);
+}
+
+// Validate on input
+document.getElementById("orderer").addEventListener("input", updateSummary);
+document.getElementById("lab").addEventListener("input", updateSummary);
+
+function buildMessage() {
+  const date = document.getElementById("orderDate").value;
+  const orderer = document.getElementById("orderer").value.trim();
+  const lab = document.getElementById("lab").value.trim();
+  const lines = getValid().map(o => {
+    const g = GAS_LIST.find(x => x.id === o.gasId);
+    return `• ${g.name} — ${o.qty}${g.unit}${o.note ? `  (${o.note})` : ""}`;
+  }).join("\n");
+  return `[이웅 박사님 팀 신양산소주문]\n\n날짜: ${date}\n주문자: ${orderer}\n연구실: ${lab}\n\n──────────\n${lines}\n──────────\n\n감사합니다.`;
+}
+
+function showPreview() {
+  if (getValid().length === 0) return;
+  document.getElementById("messageBox").textContent = buildMessage();
+  document.getElementById("modalCopyBtn").textContent = "클립보드 복사";
+  document.getElementById("modal").classList.remove("hidden");
+}
+function closeModal() { document.getElementById("modal").classList.add("hidden"); }
+
+function copyMessage() {
+  navigator.clipboard.writeText(buildMessage()).then(() => {
+    document.getElementById("modalCopyBtn").textContent = "✓ 복사 완료!";
+    setTimeout(() => { document.getElementById("modalCopyBtn").textContent = "클립보드 복사"; }, 2000);
+  });
+}
+
+function sendSMS() {
+  const phone = document.getElementById("phone").value.replace(/[^0-9]/g, "");
+  const msg = encodeURIComponent(buildMessage());
+  // iOS uses &body=, Android uses ?body= — using ?body= works on both modern platforms
+  const ua = navigator.userAgent.toLowerCase();
+  const isIOS = /iphone|ipad|ipod/.test(ua);
+  const sep = isIOS ? "&" : "?";
+  window.location.href = `sms:${phone}${sep}body=${msg}`;
+}
+
+function showToast(text) {
+  const t = document.getElementById("toast");
+  t.textContent = text;
+  t.classList.remove("hidden");
+  setTimeout(() => t.classList.add("hidden"), 2500);
+}
+
+function saveOrder() {
+  const valid = getValid();
+  if (valid.length === 0) return;
+  const record = {
+    id: Date.now().toString(),
+    date: document.getElementById("orderDate").value,
+    orderer: document.getElementById("orderer").value.trim(),
+    lab: document.getElementById("lab").value.trim(),
+    items: valid.map(o => {
+      const g = GAS_LIST.find(x => x.id === o.gasId);
+      return { name: g.name, qty: o.qty, unit: g.unit, note: o.note };
+    }),
+  };
+  history.unshift(record);
+  saveHistoryData();
+  showToast("✓ 주문 내역이 저장되었습니다");
+}
+
+/* ═══ History Rendering ═══ */
+function renderHistory() {
+  const months = [...new Set(history.map(h => h.date.slice(0, 7)))].sort().reverse();
+  let html = "";
+
+  // Month filter
+  if (months.length > 0) {
+    html += `<div class="month-filter">
+      <button class="month-chip ${selectedMonth === "" ? "active" : ""}" onclick="filterMonth('')">전체</button>
+      ${months.map(m => {
+        const [y, mo] = m.split("-");
+        return `<button class="month-chip ${selectedMonth === m ? "active" : ""}" onclick="filterMonth('${m}')">${y}년 ${parseInt(mo)}월</button>`;
+      }).join("")}
+    </div>`;
+  }
+
+  // Stats
+  if (selectedMonth) {
+    const items = history.filter(h => h.date.startsWith(selectedMonth));
+    const orderers = [...new Set(items.map(h => h.orderer))];
+    const totalItems = items.reduce((s, h) => s + h.items.length, 0);
+    const [y, mo] = selectedMonth.split("-");
+    html += `<div class="stats-card">
+      <div class="stats-title">${y}년 ${parseInt(mo)}월 요약</div>
+      <div class="stats-grid">
+        <div class="stat-item"><div class="stat-num">${items.length}</div><div class="stat-label">총 주문</div></div>
+        <div class="stat-item"><div class="stat-num">${orderers.length}</div><div class="stat-label">주문자 수</div></div>
+        <div class="stat-item"><div class="stat-num">${totalItems}</div><div class="stat-label">총 품목 수</div></div>
+      </div>
+      ${orderers.length > 0 ? `<div class="stats-orderers">주문자: ${orderers.join(", ")}</div>` : ""}
+    </div>`;
+  }
+
+  // Filtered list
+  const filtered = selectedMonth ? history.filter(h => h.date.startsWith(selectedMonth)) : history;
+
+  if (filtered.length === 0) {
+    html += `<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">주문 내역이 없습니다</div><div class="empty-desc">주문서를 작성하고 "내역 저장"을 눌러주세요</div></div>`;
+  } else {
+    html += `<div class="history-list">${filtered.map(r => {
+      const isOpen = expandedId === r.id;
+      return `<div class="history-card">
+        <div class="history-header" onclick="toggleHistory('${r.id}')">
+          <div class="history-info">
+            <div class="history-date">${r.date}</div>
+            <div class="history-meta"><span class="history-orderer">${r.orderer}</span><span class="history-lab">${r.lab}</span></div>
+          </div>
+          <span class="history-badge">${r.items.length}개 품목</span>
+          <span class="history-arrow ${isOpen ? "open" : ""}">▼</span>
+        </div>
+        ${isOpen ? `<div class="history-detail">
+          <table class="detail-table">
+            <thead><tr><th>품목</th><th class="center" style="width:70px">수량</th><th>비고</th></tr></thead>
+            <tbody>${r.items.map(it => `<tr><td>${it.name}</td><td class="center">${it.qty}${it.unit}</td><td class="sub">${it.note || "—"}</td></tr>`).join("")}</tbody>
+          </table>
+          <div class="history-actions">
+            <button class="hist-copy-btn" onclick="copyHistoryRecord('${r.id}')">📋 복사</button>
+            <button class="hist-del-btn" onclick="deleteRecord('${r.id}')">삭제</button>
+          </div>
+        </div>` : ""}
+      </div>`;
+    }).join("")}</div>`;
+  }
+
+  document.getElementById("historyPanel").innerHTML = html;
+}
+
+function filterMonth(m) { selectedMonth = m; expandedId = null; renderHistory(); }
+function toggleHistory(id) { expandedId = expandedId === id ? null : id; renderHistory(); }
+
+function copyHistoryRecord(id) {
+  const r = history.find(h => h.id === id);
+  if (!r) return;
+  const lines = r.items.map(it => `• ${it.name} — ${it.qty}${it.unit}${it.note ? `  (${it.note})` : ""}`).join("\n");
+  const msg = `[이웅 박사님 팀 신양산소주문]\n\n날짜: ${r.date}\n주문자: ${r.orderer}\n연구실: ${r.lab}\n\n──────────\n${lines}\n──────────\n\n감사합니다.`;
+  navigator.clipboard.writeText(msg).then(() => showToast("✓ 주문 내용이 복사되었습니다"));
+}
+
+function deleteRecord(id) {
+  if (!confirm("이 주문 내역을 삭제하시겠습니까?")) return;
+  history = history.filter(h => h.id !== id);
+  saveHistoryData();
+  if (expandedId === id) expandedId = null;
+  renderHistory();
+  showToast("주문 내역이 삭제되었습니다");
+}
+</script>
+</body>
+</html>
