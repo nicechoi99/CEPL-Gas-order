@@ -450,7 +450,7 @@ function buildMessage() {
   const lab = document.getElementById("lab").value.trim();
   const lines = getValid().map(o => {
     const g = GAS_LIST.find(x => x.id === o.gasId);
-    return `• ${g.name} — ${o.qty}${g.unit}${o.size ? ` [${o.size}]` : ""}${o.note ? `  (${o.note})` : ""}`;
+    return { name: g.name, qty: o.qty, unit: g.unit, size: o.size||'', note: o.note };
   }).join("\n");
   return `[이웅 박사님 팀 신양산소주문]\n\n날짜: ${date}\n주문자: ${orderer}\n연구실: ${lab}\n\n──────────\n${lines}\n──────────\n\n감사합니다.`;
 }
@@ -557,8 +557,8 @@ function renderHistory() {
         </div>
         ${isOpen ? `<div class="history-detail">
           <table class="detail-table">
-            <thead><tr><th>품목</th><th class="center" style="width:70px">수량</th><th>비고</th></tr></thead>
-            <tbody>${r.items.map(it => `<tr><td>${it.name}</td><td class="center">${it.qty}${it.unit}</td><td class="sub">${it.note || "—"}</td></tr>`).join("")}</tbody>
+            <thead><tr><th>품목</th><th class="center" style="width:60px">수량</th><th style="width:60px">사이즈</th><th>비고</th></tr></thead>
+            <tbody>${r.items.map(it => `<tr><td>${it.name}</td><td class="center">${it.qty}${it.unit}</td><td>${it.size || "—"}</td><td class="sub">${it.note || "—"}</td></tr>`).join("")}</tbody>
           </table>
           <div class="history-actions">
             <button class="hist-copy-btn" onclick="copyHistoryRecord('${r.id}')">📋 복사</button>
@@ -578,7 +578,7 @@ function toggleHistory(id) { expandedId = expandedId === id ? null : id; renderH
 function copyHistoryRecord(id) {
   const r = history.find(h => h.id === id);
   if (!r) return;
-  const lines = r.items.map(it => `• ${it.name} — ${it.qty}${it.unit}${it.note ? `  (${it.note})` : ""}`).join("\n");
+  const lines = r.items.map(it => `• ${it.name} — ${it.qty}${it.unit}${it.size ? ` [${it.size}]` : ""}${it.note ? `  (${it.note})` : ""}`).join("\n");
   const msg = `[이웅 박사님 팀 신양산소주문]\n\n날짜: ${r.date}\n주문자: ${r.orderer}\n연구실: ${r.lab}\n\n──────────\n${lines}\n──────────\n\n감사합니다.`;
   navigator.clipboard.writeText(msg).then(() => showToast("✓ 주문 내용이 복사되었습니다"));
 }
