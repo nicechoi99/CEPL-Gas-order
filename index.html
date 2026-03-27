@@ -23,7 +23,6 @@
   }
   .container { max-width: 560px; margin: 0 auto; padding: 16px 12px 40px; display: flex; flex-direction: column; gap: 14px; }
 
-  /* Header */
   .header {
     background: linear-gradient(145deg, var(--primary) 0%, var(--primary-light) 100%);
     border-radius: 16px; padding: 20px 22px 16px; color: var(--white);
@@ -37,7 +36,6 @@
   .header h1 { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
   .header .sub { font-size: 13px; opacity: 0.8; font-weight: 600; margin-top: 2px; letter-spacing: 0.5px; }
 
-  /* Tabs */
   .tab-bar { display: flex; background: var(--card); border-radius: 12px; padding: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
   .tab-btn {
     flex: 1; padding: 11px 0; border: none; border-radius: 9px; font-size: 13.5px;
@@ -46,28 +44,23 @@
   }
   .tab-btn.active { background: var(--primary); color: var(--white); font-weight: 700; }
 
-  /* Sections */
   .section { background: var(--card); border-radius: 14px; padding: 18px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
   .section-header { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
   .section-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--primary-light); flex-shrink: 0; }
   .section-dot.accent { background: var(--accent); }
   .section-label { font-size: 13px; font-weight: 700; color: var(--primary); letter-spacing: 0.3px; }
 
-  /* Form */
   .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .info-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
   .field { display: flex; flex-direction: column; gap: 4px; }
   .field label { font-size: 11px; font-weight: 600; color: var(--text-sub); }
-  .phone-fixed { display: flex; align-items: center; gap: 6px; }
-  .phone-lock { font-size: 10px; color: var(--primary-light); background: #E8EDF3; border-radius: 4px; padding: 1px 6px; font-weight: 600; }
   input, select {
     border: 1.5px solid var(--border); border-radius: 8px; padding: 9px 11px;
     font-size: 13.5px; font-family: inherit; color: var(--text); outline: none;
     background: #F7F8FA; width: 100%; transition: border-color 0.2s;
   }
   input:focus, select:focus { border-color: var(--primary-light); }
-  input[readonly] { background: #ECEEF4; color: var(--text-sub); }
 
-  /* Gas Cards */
   .gas-cards { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
   .gas-card {
     background: #F7F8FA; border: 1.5px solid var(--border); border-radius: 12px;
@@ -82,7 +75,6 @@
   .gas-field.full { width: 100%; }
   .gas-label { font-size: 11px; font-weight: 600; color: var(--text-sub); }
 
-  /* Qty Control */
   .qty-control { display: flex; align-items: center; border: 1.5px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--white); }
   .qty-btn {
     width: 36px; height: 38px; border: none; background: transparent; font-size: 17px;
@@ -95,7 +87,6 @@
     font-weight: 600; border-radius: 0; padding: 0; background: transparent;
   }
 
-  /* Buttons */
   .add-btn {
     background: var(--accent-light); color: #A06D10; border: 1.5px solid #F0D89A;
     border-radius: 8px; padding: 7px 14px; font-size: 12.5px; font-weight: 700;
@@ -128,7 +119,6 @@
   }
   .btn-disabled { opacity: 0.4; pointer-events: none; }
 
-  /* Month Filter */
   .month-filter { display: flex; gap: 6px; flex-wrap: wrap; }
   .month-chip {
     padding: 8px 14px; border-radius: 20px; border: 1.5px solid var(--border);
@@ -137,7 +127,6 @@
   }
   .month-chip.active { border-color: var(--primary); background: var(--primary); color: var(--white); font-weight: 700; }
 
-  /* Stats */
   .stats-card { background: var(--card); border-radius: 14px; padding: 18px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
   .stats-title { font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 12px; }
   .stats-grid { display: flex; gap: 12px; }
@@ -146,7 +135,6 @@
   .stat-label { font-size: 11px; color: var(--text-sub); margin-top: 2px; font-weight: 600; }
   .stats-orderers { margin-top: 12px; font-size: 12.5px; color: var(--text-sub); background: #F7F8FA; border-radius: 8px; padding: 8px 12px; }
 
-  /* History */
   .empty-state { text-align: center; padding: 48px 0; background: var(--card); border-radius: 14px; }
   .empty-icon { font-size: 36px; margin-bottom: 8px; }
   .empty-title { font-size: 14px; font-weight: 600; color: var(--text-sub); }
@@ -158,9 +146,10 @@
   .history-header:active { background: #F7F8FA; }
   .history-info { flex: 1; }
   .history-date { font-size: 14px; font-weight: 700; color: var(--primary); }
-  .history-meta { display: flex; gap: 8px; margin-top: 3px; }
+  .history-meta { display: flex; gap: 8px; margin-top: 3px; flex-wrap: wrap; }
   .history-orderer { font-size: 12px; font-weight: 600; color: var(--text); }
   .history-lab { font-size: 12px; color: var(--text-sub); }
+  .history-loc { font-size: 12px; color: var(--primary-light); }
   .history-badge { font-size: 11px; font-weight: 700; color: var(--primary-light); background: #E8EDF3; border-radius: 6px; padding: 3px 8px; white-space: nowrap; }
   .history-arrow { font-size: 12px; color: var(--text-sub); transition: transform 0.2s; }
   .history-arrow.open { transform: rotate(180deg); }
@@ -185,7 +174,6 @@
     font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit; color: var(--danger);
   }
 
-  /* Modal */
   .modal-overlay {
     position: fixed; inset: 0; background: rgba(27,42,61,0.55); backdrop-filter: blur(4px);
     display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 16px;
@@ -218,7 +206,6 @@
   }
   .modal-hint { font-size: 11px; color: var(--text-sub); text-align: center; margin-top: 12px; line-height: 1.6; }
 
-  /* Toast */
   .toast {
     position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
     background: var(--primary); color: var(--white); padding: 12px 24px; border-radius: 12px;
@@ -231,6 +218,7 @@
 
   @media (max-width: 400px) {
     .info-grid { grid-template-columns: 1fr; }
+    .info-grid-3 { grid-template-columns: 1fr; }
     .stats-grid { flex-direction: column; }
   }
 </style>
@@ -238,7 +226,6 @@
 <body>
 
 <div class="container">
-  <!-- Header -->
   <div class="header">
     <div class="logo-area">
       <div class="logo-icon">
@@ -253,7 +240,6 @@
     </div>
   </div>
 
-  <!-- Tabs -->
   <div class="tab-bar">
     <button class="tab-btn active" id="tabOrder" onclick="switchTab('order')">주문서 작성</button>
     <button class="tab-btn" id="tabHistory" onclick="switchTab('history')">주문 내역 (<span id="historyCount">0</span>)</button>
@@ -263,14 +249,14 @@
   <div id="orderPanel">
     <div class="section">
       <div class="section-header"><div class="section-dot"></div><span class="section-label">주문 정보</span></div>
-      <div class="info-grid">
+      <div class="info-grid-3">
         <div class="field"><label>주문자 *</label><input id="orderer" placeholder="이름"></div>
-        <div class="field"><label>연구실 / 부서 *</label><input id="lab" placeholder="예: L5317"></div>
+        <div class="field"><label>주문 연구실 *</label><input id="lab" placeholder="예: 이웅 박사님 연구실"></div>
+        <div class="field"><label>주문 장소 *</label><input id="location" placeholder="예: L5317"></div>
+      </div>
+      <div class="info-grid" style="margin-top:10px">
         <div class="field"><label>주문 날짜</label><input id="orderDate" type="date"></div>
-        <div class="field">
-          <label class="phone-fixed">신양산소 전화번호 <span class="phone-lock">수정가능</span></label>
-          <input id="phone" value="010-6616-5452"></div>
-        </div>
+        <div class="field"><label>수신 전화번호</label><input id="phone" value="010-6616-5452"></div>
       </div>
     </div>
 
@@ -309,37 +295,36 @@
       <button class="modal-send-btn" onclick="sendSMS()">문자 앱으로 보내기</button>
     </div>
     <div class="modal-hint">
-      * "문자 앱으로 보내기"를 누르면 신양산소(010-3778-6148)로 문자 앱이 열립니다.<br>
+      * "문자 앱으로 보내기"를 누르면 문자 앱이 열립니다.<br>
       * 카카오톡 등으로 보내려면 "클립보드 복사" 후 붙여넣기 하세요.
     </div>
   </div>
 </div>
 
-<!-- Toast -->
 <div class="toast hidden" id="toast"></div>
 
 <script>
 const GAS_LIST = [
-  { id:"1", name:"수소 99.9%", unit:"개" },
-  { id:"2", name:"질소 99.9%", unit:"개" },
-  { id:"3", name:"고압곤 99.999%", unit:"개" },
+  { id:"1", name:"수소 99.9%", unit:"본" },
+  { id:"2", name:"질소 99.9%", unit:"본" },
+  { id:"3", name:"고압곤 99.999%", unit:"본" },
   { id:"4", name:"고압조정기", unit:"개" },
   { id:"5", name:"케이지연결", unit:"개" },
   { id:"6", name:"홀더 10L", unit:"개" },
-  { id:"7", name:"질소 99.999%", unit:"개" },
+  { id:"7", name:"질소 99.999%", unit:"본" },
   { id:"8", name:"배프레저조정기", unit:"개" },
-  { id:"9", name:"수소 99.9999%", unit:"개" },
+  { id:"9", name:"수소 99.9999%", unit:"본" },
   { id:"10", name:"액체질소", unit:"L" },
-  { id:"11", name:"탄산 93.5%", unit:"개" },
+  { id:"11", name:"탄산 93.5%", unit:"본" },
   { id:"12", name:"홀더", unit:"개" },
   { id:"13", name:"서포트 3구", unit:"개" },
-  { id:"14", name:"H2 0.1 15%/Ar 10L", unit:"개" },
-  { id:"15", name:"아르곤 99.999%", unit:"개" },
-  { id:"16", name:"공기", unit:"개" },
-  { id:"17", name:"고순도탄산", unit:"개" },
-  { id:"18", name:"싸이곤 탄산", unit:"개" },
+  { id:"14", name:"H2 0.1 15%/Ar 10L", unit:"본" },
+  { id:"15", name:"아르곤 99.999%", unit:"본" },
+  { id:"16", name:"공기", unit:"본" },
+  { id:"17", name:"고순도탄산", unit:"본" },
+  { id:"18", name:"싸이곤 탄산", unit:"본" },
   { id:"19", name:"테프론호스(너트,패럴장착) 1/4", unit:"개" },
-  { id:"20", name:"CO2 0.3% Ar", unit:"개" },
+  { id:"20", name:"CO2 0.3% Ar", unit:"본" },
   { id:"21", name:"테프론호스(너트,패럴장착) 3/8", unit:"개" },
   { id:"22", name:"테프론호스(너트,패럴장착) 1/2", unit:"개" },
   { id:"23", name:"테프론호스(너트,패럴장착) 1/8", unit:"개" },
@@ -351,7 +336,6 @@ let currentTab = "order";
 let selectedMonth = "";
 let expandedId = null;
 
-// Init
 document.getElementById("orderDate").value = new Date().toISOString().split("T")[0];
 loadHistory();
 renderGasRows();
@@ -429,7 +413,8 @@ function updateSummary() {
   const bar = document.getElementById("summaryBar");
   const orderer = document.getElementById("orderer").value.trim();
   const lab = document.getElementById("lab").value.trim();
-  const isValid = orderer && lab && valid.length > 0;
+  const location = document.getElementById("location").value.trim();
+  const isValid = orderer && lab && location && valid.length > 0;
 
   if (valid.length > 0) {
     const totalQty = valid.reduce((s, o) => s + o.qty, 0);
@@ -443,19 +428,20 @@ function updateSummary() {
   document.getElementById("previewBtn").classList.toggle("btn-disabled", !isValid);
 }
 
-// Validate on input
 document.getElementById("orderer").addEventListener("input", updateSummary);
 document.getElementById("lab").addEventListener("input", updateSummary);
+document.getElementById("location").addEventListener("input", updateSummary);
 
 function buildMessage() {
   const date = document.getElementById("orderDate").value;
   const orderer = document.getElementById("orderer").value.trim();
   const lab = document.getElementById("lab").value.trim();
+  const location = document.getElementById("location").value.trim();
   const lines = getValid().map(o => {
     const g = GAS_LIST.find(x => x.id === o.gasId);
     return `• ${g.name} — ${o.qty}${g.unit}${o.size ? ` [${o.size}]` : ""}${o.note ? `  (${o.note})` : ""}`;
   }).join("\n");
-  return `[이웅 박사님 팀 신양산소주문]\n\n날짜: ${date}\n주문자: ${orderer}\n연구실: ${lab}\n\n──────────\n${lines}\n──────────\n\n감사합니다.`;
+  return `[이웅 박사님 팀 신양산소주문]\n\n날짜: ${date}\n주문자: ${orderer}\n연구실: ${lab}\n장소: ${location}\n\n──────────\n${lines}\n──────────\n\n감사합니다.`;
 }
 
 function showPreview() {
@@ -497,6 +483,7 @@ function saveOrder() {
     date: document.getElementById("orderDate").value,
     orderer: document.getElementById("orderer").value.trim(),
     lab: document.getElementById("lab").value.trim(),
+    location: document.getElementById("location").value.trim(),
     items: valid.map(o => {
       const g = GAS_LIST.find(x => x.id === o.gasId);
       return { name: g.name, qty: o.qty, unit: g.unit, size: o.size||'', note: o.note||'' };
@@ -507,7 +494,6 @@ function saveOrder() {
   showToast("✓ 주문 내역이 저장되었습니다");
 }
 
-/* ═══ History Rendering ═══ */
 function renderHistory() {
   const months = [...new Set(history.map(h => h.date.slice(0, 7)))].sort().reverse();
   let html = "";
@@ -549,7 +535,11 @@ function renderHistory() {
         <div class="history-header" onclick="toggleHistory('${r.id}')">
           <div class="history-info">
             <div class="history-date">${r.date}</div>
-            <div class="history-meta"><span class="history-orderer">${r.orderer}</span><span class="history-lab">${r.lab}</span></div>
+            <div class="history-meta">
+              <span class="history-orderer">${r.orderer}</span>
+              <span class="history-lab">${r.lab}</span>
+              <span class="history-loc">${r.location || ""}</span>
+            </div>
           </div>
           <span class="history-badge">${r.items.length}개 품목</span>
           <span class="history-arrow ${isOpen ? "open" : ""}">▼</span>
@@ -578,7 +568,7 @@ function copyHistoryRecord(id) {
   const r = history.find(h => h.id === id);
   if (!r) return;
   const lines = r.items.map(it => `• ${it.name} — ${it.qty}${it.unit}${it.size ? ` [${it.size}]` : ""}${it.note ? `  (${it.note})` : ""}`).join("\n");
-  const msg = `[이웅 박사님 팀 신양산소주문]\n\n날짜: ${r.date}\n주문자: ${r.orderer}\n연구실: ${r.lab}\n\n──────────\n${lines}\n──────────\n\n감사합니다.`;
+  const msg = `[이웅 박사님 팀 신양산소주문]\n\n날짜: ${r.date}\n주문자: ${r.orderer}\n연구실: ${r.lab}\n장소: ${r.location || ""}\n\n──────────\n${lines}\n──────────\n\n감사합니다.`;
   navigator.clipboard.writeText(msg).then(() => showToast("✓ 주문 내용이 복사되었습니다"));
 }
 
