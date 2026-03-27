@@ -450,7 +450,7 @@ function buildMessage() {
   const lab = document.getElementById("lab").value.trim();
   const lines = getValid().map(o => {
     const g = GAS_LIST.find(x => x.id === o.gasId);
-    return `• ${g.name} — ${o.qty}${g.unit}${o.note ? `  (${o.note})` : ""}`;
+    return `• ${g.name} — ${o.qty}${g.unit}${o.size ? ` [${o.size}]` : ""}${o.note ? `  (${o.note})` : ""}`;
   }).join("\n");
   return `[이웅 박사님 팀 신양산소주문]\n\n날짜: ${date}\n주문자: ${orderer}\n연구실: ${lab}\n\n──────────\n${lines}\n──────────\n\n감사합니다.`;
 }
