@@ -328,9 +328,10 @@ const GAS_LIST = [
   { id:"21", name:"테프론호스(너트,패럴장착) 3/8", unit:"개" },
   { id:"22", name:"테프론호스(너트,패럴장착) 1/2", unit:"개" },
   { id:"23", name:"테프론호스(너트,패럴장착) 1/8", unit:"개" },
+  { id:"99", name:"기타 (직접입력)", unit:"개" },
 ];
 
-let orders = [{ gasId:"", qty:1, size:"", note:"" }];
+let orders = [{ gasId:"", qty:1, size:"", note:"", customName:"" }];
 let history = [];
 let currentTab = "order";
 let selectedMonth = "";
@@ -378,6 +379,10 @@ function renderGasRows() {
         <label class="gas-label">품목</label>
         <select onchange="updateRow(${i},'gasId',this.value)">${gasOptions(o.gasId)}</select>
       </div>
+      ${o.gasId === "99" ? `<div class="gas-field full">
+        <label class="gas-label">품목명 직접입력</label>
+        <input placeholder="품목명을 입력하세요" value="${o.customName||''}" oninput="updateRow(${i},'customName',this.value)">
+      </div>` : ""}
       <div class="gas-field full">
         <label class="gas-label">사이즈</label>
         <input placeholder="예: 47L, 10L" value="${o.size||''}" oninput="updateRow(${i},'size',this.value)">
@@ -401,7 +406,7 @@ function renderGasRows() {
   updateSummary();
 }
 
-function addRow() { orders.push({ gasId:"", qty:1, size:"", note:"" }); renderGasRows(); }
+function addRow() { orders.push({ gasId:"", qty:1, size:"", note:"", customName:"" }); renderGasRows(); }
 function removeRow(i) { orders.splice(i, 1); renderGasRows(); }
 function updateRow(i, field, value) { orders[i][field] = value; if (field === "gasId") renderGasRows(); else updateSummary(); }
 function changeQty(i, delta) { orders[i].qty = Math.max(1, orders[i].qty + delta); renderGasRows(); }
@@ -439,7 +444,8 @@ function buildMessage() {
   const location = document.getElementById("location").value.trim();
   const lines = getValid().map(o => {
     const g = GAS_LIST.find(x => x.id === o.gasId);
-    return `• ${g.name} — ${o.qty}${g.unit}${o.size ? ` [${o.size}]` : ""}${o.note ? `  (${o.note})` : ""}`;
+    const displayName = o.gasId === "99" ? (o.customName || "기타") : g.name;
+    return `• ${displayName} — ${o.qty}${g.unit}${o.size ? ` [${o.size}]` : ""}${o.note ? `  (${o.note})` : ""}`;
   }).join("\n");
   return `[이웅 박사님 팀 신양산소주문]\n\n날짜: ${date}\n주문자: ${orderer}\n연구실: ${lab}\n장소: ${location}\n\n──────────\n${lines}\n──────────\n\n감사합니다.`;
 }
@@ -486,7 +492,8 @@ function saveOrder() {
     location: document.getElementById("location").value.trim(),
     items: valid.map(o => {
       const g = GAS_LIST.find(x => x.id === o.gasId);
-      return { name: g.name, qty: o.qty, unit: g.unit, size: o.size||'', note: o.note||'' };
+      const displayName = o.gasId === "99" ? (o.customName || "기타") : g.name;
+      return { name: displayName, qty: o.qty, unit: g.unit, size: o.size||'', note: o.note||'' };
     }),
   };
   history.unshift(record);
